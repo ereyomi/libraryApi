@@ -5,6 +5,7 @@ namespace App;
 use App\College;
 use App\Student;
 use App\Librarian;
+use\Illuminate\Support\Str;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,6 +31,11 @@ class Book extends Model
     public function isAvailble()
     {
     	return $this->status == Book::AVAILABLE;
+    }
+
+    public static function generateIsbn()
+    {
+        return mt_rand(1000000000000000, 9999999999999999);
     }
 
     //relationships

@@ -14,7 +14,8 @@ class CreateCollegesTable extends Migration
     public function up()
     {
         Schema::create('colleges', function (Blueprint $table) {
-            $table->id();
+            $table->bigincrements('id');
+            $table->string('college');
             $table->timestamps();
         });
     }

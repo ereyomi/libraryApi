@@ -48,6 +48,7 @@ class UserController extends ApiController
     	if(!$validator->fails()){
             return response()->json(['error' => 'there was an error'], 401);
         }
+
     	//dd($data['password']);
     	
 
@@ -63,20 +64,6 @@ class UserController extends ApiController
     	return response()->json(['data' => $user, 'access_token' => $accessToken], 201);
     }
 
-    public function getBooks(){
-
-    	$data = Book::orderBy('id', 'desc')->paginate(10);
-
-        return response()->json(['data' => $data], 201);
-    }
-
-    public function searchBooks(Request $request)
-    {
-        $data = $request->all();
-
-       $searchIt = Book::where('name', 'LIKE', '%' . $request->search . '%')->get();
-
-        return response()->json(['data' => $searchIt], 201);
-    }
+    
 
 }

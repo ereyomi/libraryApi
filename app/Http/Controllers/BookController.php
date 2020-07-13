@@ -13,11 +13,12 @@ use App\User;
 class BookController extends Controller
 {
 
-    function __construct()
-    {
-        // $this->middleware('auth');
-        $this->middleware('auth')->except(['index', 'show']);
-    }
+    // function __construct()
+    // {
+    //     //$this->middleware('auth');
+    //     //$this->middleware('auth')->except(['index', 'show', 'search']);
+    //     //$this->middleware('auth')->only(['store']);
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -42,7 +43,11 @@ class BookController extends Controller
         //return response()->json(['data' => $user], 200);
         return response()->json(['data' => $book], 201);
     }
-
+    public function search(Request $request)
+    {
+        $search = Book::where('name', 'LIKE','%' . $request->search . '%')->get();
+        return response()->json(['data' => $search], 201);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -65,11 +70,11 @@ class BookController extends Controller
         $data = $request->all();
 
         $rule = [
-            'name' => 'required|string|min:5',
+            'name' => 'required|string',
             'description' => 'required',
             'user_id' => 'required',
             'cover' => 'required|image',
-            'college_id' => 'required|integer'
+            'college_id' => 'required'
         ];
 
         $validator = Validator::make($data, $rule);     
@@ -77,12 +82,13 @@ class BookController extends Controller
         if($validator->fails()){
             return response()->json(['error' => $validator->errors()], 401);
         }
-        //dd($data['password']);
-        // $data['user_id'] = User::all()->random()->id;
-
+        //$data['user_id'] = User::all()->random()->id;
         $data['status'] = Book::NOT_AVAILABLE;
 
-        $data['cover'] = $request->cover->store('enginering');
+        //$data['cover'] = $request->cover->store('enginering');
+        $data['cover'] = $request->cover->store('');
+         $data['isbn'] = Book::generateIsbn();
+         $data['rating'] = 5; 
 
         $CreateBook = Book::create($data);
 

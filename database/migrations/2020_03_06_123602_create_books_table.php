@@ -18,13 +18,14 @@ class CreateBooksTable extends Migration
             $table->unsignedBigInteger('user_id'); 
             $table->string('name');
             $table->string('description', 1000);
-            $table->string('isbn');
-            $table->integer('college_id')->unsigned();
+            $table->unsignedBigInteger('isbn');
+            $table->unsignedBigInteger('college_id');
             $table->integer('status')->unsigned();            
             $table->string('cover');
             $table->integer('rating')->unsigned();  
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('college_id')->references('id')->on('colleges');
         });
 
         // Schema::table('books', function($table) {

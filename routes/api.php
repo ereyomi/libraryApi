@@ -24,14 +24,6 @@ use Illuminate\Http\Request;
 //show others except create and edit
 //Route::resource('books', 'BookController',['except' => ['create', 'edit']]);
 
-Route::resource('users', 'UserController', ['only' => ['index', 'show', 'store']]);
-
-Route::post('search', 'UserController@searchBooks');
-
-Route::get('books', 'UserController@getBooks');
-
-Route::post('login', 'Auth\LoginController@login');
-
 // Route::group(['middleware' => 'auth:api'], function(){
 // 	Route::resource('book', 'BookController', ['only' => ['store']]);
 // });
@@ -41,8 +33,11 @@ this was commented out as the controller __construct manages the route middlewar
 	Route::resource('book', 'BookController', ['only' => ['index', 'show', 'store']])->middleware('auth:api');
 
 */
+Route::resource('users', 'UserController', ['only' => ['index', 'show', 'store']]);
+Route::resource('books', 'BookController', ['only' => ['index', 'show']]);
+Route::post('storebook', 'BookController@store');
 
-Route::resource('book', 'BookController', ['only' => ['index', 'show', 'store']]);
+Route::post('search', 'BookController@search');
 
-//Route::post('book', 'BookController@store')->middleware('auth:api');
-//Route::post('search', 'BookController@search');
+Route::post('login', 'Auth\LoginController@login');
+
