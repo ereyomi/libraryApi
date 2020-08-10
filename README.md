@@ -1,6 +1,6 @@
 ##Setup / Installation
 
-1. Download and install [Node.js](https://nodejs.org/en/)
+1. Download and install [git](https://git-scm.com/)
 
 2. Clone project
 
